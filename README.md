@@ -1,7 +1,7 @@
 PySave
 =========
 
-Python module for easy saveing in SQLite3
+Python module for easy save in SQLite3
 
 Requirements
 =========
