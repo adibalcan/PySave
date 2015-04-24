@@ -17,14 +17,14 @@ def getFormat(data):
 		return 'INTEGER'
 	return 'TEXT'
 
-def insertRecord(data):
+def insertRecord(data, name):
 	try:
 		del data['_id'] # mongo surprise :)
 	except Exception as e:
 		pass
 	columns = ', '.join(data.keys())
 	placeholders = ', '.join('?' * len(data))
-	insertQuery = 'INSERT INTO data ({}) VALUES ({})'.format(columns, placeholders)
+	insertQuery = 'INSERT INTO ' + name + ' ({}) VALUES ({})'.format(columns, placeholders)
 	c.execute(insertQuery, tuple(data.values()))
 
 def createTable(data, name):
@@ -47,7 +47,7 @@ def save(data, name):
 	conn = sqlite3.connect(name + '.db')
 	c = conn.cursor()
 	createTable(data, name)
-	insertRecord(data)
+	insertRecord(data, name)
 	num += 1
 	if num % saveStep == 0: 
 		conn.commit()
